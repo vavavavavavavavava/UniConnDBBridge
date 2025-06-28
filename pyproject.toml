@@ -1,18 +1,18 @@
-[tool.poetry]
+[project]
 name = "uniconndbbridge"
 version = "25.6.0"
-description = "Universal auth-ready SQLAlchemy Database Manager"
-authors = ["vavavavavavavavava <159633814+vavavavavavavavava@users.noreply.github.com>"]
-license = "MIT"
+description = "あらゆる認証方式に対応した汎用 SQLAlchemy データベースマネージャ"
+authors = [
+    { name = "vavavavavavavavava", email = "159633814+vavavavavavavavava@users.noreply.github.com" }
+]
 readme = "README.md"
-packages = [{include = "uniconndbbridge"}]
+requires-python = ">=3.9"
+dependencies = [
+    "SQLAlchemy>=2.0,<3.0",
+    "typing-extensions>=4.0,<5.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-SQLAlchemy = "^2.0"
-typing-extensions = "^4.0"
-
-[tool.poetry.extras]
+[project.optional-dependencies]
 postgres = ["psycopg2-binary>=2.9"]
 postgres_async = ["asyncpg>=0.29"]
 mysql = ["mysqlclient>=2.2"]
@@ -29,8 +29,16 @@ docs = [
     "mkdocs-material>=9.5",
     "mkdocstrings[python]>=0.25",
     "pymdown-extensions>=10.7",
-    "mkdocs-git-revision-date-localized-plugin>=1.2"
+    "mkdocs-git-revision-date-localized-plugin>=1.2",
 ]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+packages = [{ include = "uniconndbbridge" }]
+requires-poetry = ">=2.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4"
@@ -38,10 +46,6 @@ pytest-cov = "^4.1"
 pytest-asyncio = "^0.21"
 mypy = "^1.5"
 ruff = "^0.0.285"
-
-[build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
 
 [tool.ruff]
 line-length = 88
