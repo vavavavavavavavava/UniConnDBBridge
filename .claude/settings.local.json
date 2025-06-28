@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(poetry install:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": []
+  }
+}
