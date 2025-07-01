@@ -1,6 +1,6 @@
 [project]
 name = "uniconndbbridge"
-version = "25.6.0"
+version = "0.1.0"
 description = "あらゆる認証方式に対応した汎用 SQLAlchemy データベースマネージャ"
 authors = [
     { name = "vavavavavavavavava", email = "159633814+vavavavavavavavava@users.noreply.github.com" }
@@ -18,7 +18,7 @@ postgres_async = ["asyncpg>=0.29"]
 mysql = ["mysqlclient>=2.2"]
 mysql_async = ["aiomysql>=0.2"]
 sqlite_async = ["aiosqlite>=0.20"]
-oracle = ["python-oracledb>=2.0"]
+oracle = ["oracledb>=2.0"]
 mssql = ["pyodbc>=5.0"]
 mssql_async = ["aioodbc>=0.4"]
 kerberos = ["pykerberos>=1.2"]
