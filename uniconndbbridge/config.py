@@ -47,6 +47,32 @@ class DBConfig:
     echo: bool = False
     engine_options: Dict[str, Any] = field(default_factory=dict)
 
+    def __post_init__(self):
+        """Post-initialization to set default driver if not specified."""
+        if self.driver is None:
+            self.driver = self.get_default_driver()
+
+    def get_default_driver(self) -> str:
+        """Get the default driver for the dialect."""
+        from .registry import DriverRegistry
+
+        dialect_info = DriverRegistry.get_dialect_info(self.dialect)
+        if not dialect_info:
+            raise ValueError(f"Unsupported dialect: {self.dialect}")
+        
+        return dialect_info.default_driver
+
+    def set_driver(self, driver: Optional[str] = None) -> None:
+        """Set the driver, using default if None is provided."""
+        if driver is None:
+            self.driver = self.get_default_driver()
+        else:
+            # Validate the driver
+            from .registry import DriverRegistry
+            if not DriverRegistry.validate_driver(self.dialect, driver):
+                raise ValueError(f"Driver '{driver}' is not supported for dialect '{self.dialect}'")
+            self.driver = driver
+
     def to_url(self, driver_override: Optional[str] = None) -> str:
         """Convert configuration to SQLAlchemy URL."""
         from .registry import DriverRegistry
@@ -75,7 +101,7 @@ class DBConfig:
 
         # For other databases
         url_parts = [f"{self.dialect}"]
-        if effective_driver and effective_driver != dialect_info.default_driver:
+        if effective_driver:
             url_parts.append(f"+{effective_driver}")
 
         url_parts.extend(["://", f"{encoded_user}:{encoded_password}@{self.host}"])

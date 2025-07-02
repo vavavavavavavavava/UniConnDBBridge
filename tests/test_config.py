@@ -42,7 +42,7 @@ class TestDBConfig:
         )
 
         url = config.to_url()
-        assert "postgresql://" in url
+        assert "postgresql+psycopg2://" in url
         assert "testuser:testpass@localhost:5432/testdb" in url
 
     def test_to_url_mysql(self):
@@ -56,7 +56,7 @@ class TestDBConfig:
         )
 
         url = config.to_url()
-        assert "mysql://" in url
+        assert "mysql+mysqlconnector://" in url
         assert "testuser:testpass@localhost" in url
 
     def test_to_url_sqlite(self):
@@ -90,6 +90,86 @@ class TestDBConfig:
         assert options["pool_size"] == 20
         assert options["max_overflow"] == 30
         assert options["echo"] is True
+
+    def test_default_driver_setting(self):
+        """Test that default driver is set when not specified."""
+        config = DBConfig(
+            dialect="postgresql",
+            user="testuser",
+            password="testpass",
+        )
+
+        # Driver should be set to default for PostgreSQL
+        assert config.driver == "psycopg2"
+
+    def test_explicit_driver_preserved(self):
+        """Test that explicitly set driver is preserved."""
+        config = DBConfig(
+            dialect="postgresql",
+            user="testuser",
+            password="testpass",
+            driver="pg8000",
+        )
+
+        # Explicitly set driver should be preserved
+        assert config.driver == "pg8000"
+
+    def test_set_driver_method(self):
+        """Test set_driver method."""
+        config = DBConfig(
+            dialect="postgresql",
+            user="testuser",
+            password="testpass",
+            driver="pg8000",
+        )
+
+        # Set to default driver
+        config.set_driver(None)
+        assert config.driver == "psycopg2"
+
+        # Set to specific driver
+        config.set_driver("pg8000")
+        assert config.driver == "pg8000"
+
+    def test_set_driver_validation(self):
+        """Test driver validation in set_driver method."""
+        config = DBConfig(
+            dialect="postgresql",
+            user="testuser",
+            password="testpass",
+        )
+
+        # Try to set invalid driver
+        try:
+            config.set_driver("invalid_driver")
+            assert False, "Should have raised ValueError"
+        except ValueError as e:
+            assert "invalid_driver" in str(e)
+            assert "postgresql" in str(e)
+
+    def test_get_default_driver(self):
+        """Test get_default_driver method."""
+        config = DBConfig(
+            dialect="mysql",
+            user="testuser",
+            password="testpass",
+        )
+
+        default_driver = config.get_default_driver()
+        assert default_driver == "mysqlconnector"
+
+    def test_unsupported_dialect_error(self):
+        """Test error handling for unsupported dialect."""
+        try:
+            config = DBConfig(
+                dialect="unsupported_db",
+                user="testuser",
+                password="testpass",
+            )
+            assert False, "Should have raised ValueError"
+        except ValueError as e:
+            assert "Unsupported dialect" in str(e)
+            assert "unsupported_db" in str(e)
 
 
 class TestConnectionInfo:

@@ -56,17 +56,19 @@ class DriverRegistry:
         # MySQL
         cls._dialects["mysql"] = DialectInfo(
             name="mysql",
-            default_driver="mysqlclient",
+            default_driver="mysqlconnector",
             default_port=3306,
             async_drivers=["aiomysql", "asyncmy"],
-            sync_drivers=["mysqlclient", "pymysql"],
+            sync_drivers=["mysqlconnector", "mysqlclient", "pymysql"],
             required_packages={
+                "mysqlconnector": ["mysql-connector-python"],
                 "mysqlclient": ["mysqlclient"],
                 "pymysql": ["pymysql"],
                 "aiomysql": ["aiomysql"],
                 "asyncmy": ["asyncmy"],
             },
             install_commands={
+                "mysqlconnector": "pip install mysql-connector-python",
                 "mysqlclient": "pip install mysqlclient",
                 "pymysql": "pip install pymysql",
                 "aiomysql": "pip install aiomysql",
