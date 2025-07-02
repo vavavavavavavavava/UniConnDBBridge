@@ -1,0 +1,820 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>UniConnDBBridge ― 最終仕様書 (2025-06-26版) - UniConnDBBridge</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#uniconndbbridge-2025-06-26" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="UniConnDBBridge" class="md-header__button md-logo" aria-label="UniConnDBBridge" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            UniConnDBBridge
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              UniConnDBBridge ― 最終仕様書 (2025-06-26版)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vavavavavavavavava/UniConnDBBridge" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vavavavavavavavava/UniConnDBBridge
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="UniConnDBBridge" class="md-nav__button md-logo" aria-label="UniConnDBBridge" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    UniConnDBBridge
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vavavavavavavavava/UniConnDBBridge" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vavavavavavavavava/UniConnDBBridge
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ホーム
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    リファレンス
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 概要
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-fr" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 機能要件（FR）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-nfr" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 非機能要件（NFR）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-db" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 採用 DB ドライバと根拠
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-poetry-pyprojecttoml" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Poetry pyproject.toml（主要抜粋）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. ディレクトリ構成
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-api" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 主要 API シグネチャ
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. ドキュメント &amp; サイト公開
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-cicd" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. CI/CD 概要
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. CI/CD 概要">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ciyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      ci.yml
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docsyml" class="md-nav__link">
+    <span class="md-ellipsis">
+      docs.yml
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. 開発ワークフロー
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#11" class="md-nav__link">
+    <span class="md-ellipsis">
+      11. 拡張ロードマップ（抜粋）
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="11. 拡張ロードマップ（抜粋）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      🎉 結論
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="uniconndbbridge-2025-06-26">UniConnDBBridge ― 最終仕様書 (2025-06-26版)</h1>
+<p>すべての合意内容を <strong>重複なく</strong> 1 本に統合した決定版です。
+このドキュメントだけでリポジトリを用意し、開発・公開まで進められます。</p>
+<hr />
+<h2 id="1">1. 概要</h2>
+<table>
+<thead>
+<tr>
+<th>項目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ライブラリ名</td>
+<td><strong>UniConnDBBridge</strong></td>
+</tr>
+<tr>
+<td>目的</td>
+<td>SQLAlchemy が扱えるあらゆる RDBMS・認証方式を透過化し、同期／非同期 API を一本化</td>
+</tr>
+<tr>
+<td>主な特徴</td>
+<td>ドライバ自動選定、接続情報自動判定、Poetry パッケージ、MkDocs リファレンス、GitHub Actions CI/CD</td>
+</tr>
+<tr>
+<td>ライセンス</td>
+<td>MIT</td>
+</tr>
+<tr>
+<td>バージョニング</td>
+<td>CalVer <code>YY.MM.PATCH</code>（例 <code>25.6.0</code>）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2-fr">2. 機能要件（FR）</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>要件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>FR-01</strong></td>
+<td>接続抽象化：URL／Engine／Session 生成を <code>DatabaseManager</code> に統合</td>
+</tr>
+<tr>
+<td><strong>FR-02</strong></td>
+<td>多様な認証：PW／SSL／Kerberos／IAM／OAuth2 などをプラグイン化</td>
+</tr>
+<tr>
+<td><strong>FR-03</strong></td>
+<td>同期 (<code>DatabaseManager</code>) と非同期 (<code>AsyncDatabaseManager</code>) API</td>
+</tr>
+<tr>
+<td><strong>FR-04</strong></td>
+<td>コネクションプール細分設定</td>
+</tr>
+<tr>
+<td><strong>FR-05</strong></td>
+<td>トランザクション ContextManager で自動 commit/rollback</td>
+</tr>
+<tr>
+<td><strong>FR-06</strong></td>
+<td>CRUD・生 SQL・メタデータ取得ユーティリティ</td>
+</tr>
+<tr>
+<td><strong>FR-07</strong></td>
+<td>ORM 連携（Declarative Base 共有）</td>
+</tr>
+<tr>
+<td><strong>FR-08</strong></td>
+<td>DB 依存例外を独自階層へ正規化</td>
+</tr>
+<tr>
+<td><strong>FR-09</strong></td>
+<td>標準 <code>logging</code> + OpenTelemetry トレーシング</td>
+</tr>
+<tr>
+<td><strong>FR-10</strong></td>
+<td>Alembic 用設定テンプレート生成</td>
+</tr>
+<tr>
+<td><strong>FR-11</strong></td>
+<td><code>connect_info()</code>：接続済み Engine から dialect/driver 等を取得</td>
+</tr>
+<tr>
+<td><strong>FR-12</strong></td>
+<td>上記情報をログやエラー表示に再利用</td>
+</tr>
+<tr>
+<td><strong>FR-13</strong></td>
+<td><code>AsyncDatabaseManager.connect_info_async()</code> も提供</td>
+</tr>
+<tr>
+<td><strong>FR-14</strong></td>
+<td><strong>探索的 URL 生成</strong> <code>discover_connection()</code>／<code>discover_connection_async()</code><br> ― 基本情報（user/password/host/port/database）だけで接続テストを順次実施し、成功した URL を返す</td>
+</tr>
+<tr>
+<td><strong>FR-15</strong></td>
+<td><code>DatabaseManager.from_discovery()</code> と非同期版で簡易利用</td>
+</tr>
+<tr>
+<td><strong>FR-16</strong></td>
+<td>探索対象 dialect・タイムアウトをユーザー指定可能</td>
+</tr>
+<tr>
+<td><strong>FR-17</strong></td>
+<td>上記機能をドキュメントとテストでカバレッジ確保</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="3-nfr">3. 非機能要件（NFR）</h2>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>要件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>NFR-01</strong></td>
+<td><strong>Poetry</strong> で依存とビルド管理</td>
+</tr>
+<tr>
+<td><strong>NFR-02</strong></td>
+<td>必須依存は最小 (<code>SQLAlchemy 2.x</code>, <code>typing-extensions</code>)、他は extras で分離</td>
+</tr>
+<tr>
+<td><strong>NFR-03</strong></td>
+<td>スレッドセーフ（同期 API）</td>
+</tr>
+<tr>
+<td><strong>NFR-04</strong></td>
+<td>型ヒント 100 %・MyPy strict 0 エラー</td>
+</tr>
+<tr>
+<td><strong>NFR-05</strong></td>
+<td><strong>MkDocs-Material</strong> + mkdocstrings で API リファレンス自動生成・GitHub Pages 公開</td>
+</tr>
+<tr>
+<td><strong>NFR-06</strong></td>
+<td>pytest(+asyncio) で 90 %以上カバレッジ</td>
+</tr>
+<tr>
+<td><strong>NFR-07</strong></td>
+<td>GitHub Actions：lint→test→build→PyPI／docs→Pages</td>
+</tr>
+<tr>
+<td><strong>NFR-08</strong></td>
+<td>CalVer による予測可能なリリース</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="4-db">4. 採用 DB ドライバと根拠</h2>
+<table>
+<thead>
+<tr>
+<th>DB</th>
+<th>同期ドライバ</th>
+<th>非同期ドライバ</th>
+<th>採用理由（抜粋）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>PostgreSQL</td>
+<td><code>psycopg2-binary</code></td>
+<td><code>asyncpg</code></td>
+<td>公式既定・高速・wheel 提供</td>
+</tr>
+<tr>
+<td>MySQL / MariaDB</td>
+<td><code>mysqlclient</code></td>
+<td><code>aiomysql</code></td>
+<td>C 実装高速・採用例多数</td>
+</tr>
+<tr>
+<td>SQLite</td>
+<td>標準 <code>sqlite3</code></td>
+<td><code>aiosqlite</code></td>
+<td>CPython 同梱・API 互換</td>
+</tr>
+<tr>
+<td>Oracle</td>
+<td><code>python-oracledb</code></td>
+<td>同左（async 対応）</td>
+<td>Oracle 公式後継</td>
+</tr>
+<tr>
+<td>SQL Server</td>
+<td><code>pyodbc</code></td>
+<td><code>aioodbc</code> (任意)</td>
+<td>公式方言前提・全 OS wheel</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5-poetry-pyprojecttoml">5. Poetry <code>pyproject.toml</code>（主要抜粋）</h2>
+<pre><code class="language-toml">[tool.poetry]
+name = &quot;uniconndbbridge&quot;
+version = &quot;25.6.0&quot;
+description = &quot;Universal auth-ready SQLAlchemy Database Manager&quot;
+license = &quot;MIT&quot;
+packages = [{include = &quot;uniconndbbridge&quot;}]
+
+[tool.poetry.dependencies]
+python = &quot;^3.9&quot;
+SQLAlchemy = &quot;^2.0&quot;
+typing-extensions = &quot;^4.0&quot;
+
+[tool.poetry.extras]
+postgres          = [&quot;psycopg2-binary&gt;=2.9&quot;]
+postgres_async    = [&quot;asyncpg&gt;=0.29&quot;]
+mysql             = [&quot;mysqlclient&gt;=2.2&quot;]
+mysql_async       = [&quot;aiomysql&gt;=0.2&quot;]
+sqlite_async      = [&quot;aiosqlite&gt;=0.20&quot;]
+oracle            = [&quot;python-oracledb&gt;=2.0&quot;]
+mssql             = [&quot;pyodbc&gt;=5.0&quot;]
+mssql_async       = [&quot;aioodbc&gt;=0.4&quot;]
+kerberos          = [&quot;pykerberos&gt;=1.2&quot;]
+aws               = [&quot;boto3&gt;=1.34&quot;, &quot;botocore&gt;=1.34&quot;]
+gcp               = [&quot;google-auth&gt;=2.0&quot;]
+azure             = [&quot;azure-identity&gt;=1.15&quot;]
+docs              = [&quot;mkdocs-material&gt;=9.5&quot;, &quot;mkdocstrings[python]&gt;=0.25&quot;,
+                     &quot;pymdown-extensions&gt;=10.7&quot;,
+                     &quot;mkdocs-git-revision-date-localized-plugin&gt;=1.2&quot;]
+</code></pre>
+<hr />
+<h2 id="6">6. ディレクトリ構成</h2>
+<pre><code>uniconndbbridge/
+├── uniconndbbridge/          # ライブラリ本体
+│   ├── __init__.py
+│   ├── core.py              # DatabaseManager
+│   ├── async_.py            # AsyncDatabaseManager
+│   ├── discovery.py         # discover_connection 実装
+│   ├── config.py            # DBConfig &amp; Auth plugins
+│   ├── exceptions.py
+│   ├── registry.py
+│   └── py.typed
+├── docs/                    # MkDocs ソース
+├── tests/
+└── .github/workflows/       # ci.yml / docs.yml
+</code></pre>
+<hr />
+<h2 id="7-api">7. 主要 API シグネチャ</h2>
+<pre><code class="language-python">class DatabaseManager:
+    def __init__(self, url: str | None = None, *, config: DBConfig | dict | None = None, ...)
+
+    # 自動判定
+    def connect_info(self) -&gt; ConnectionInfo: ...
+
+    # 探索的 URL 生成
+    @classmethod
+    def discover_connection(cls, *, user: str, password: str, host: str = &quot;localhost&quot;,
+                            port: int | None = None, database: str | None = None,
+                            dialects: Sequence[str] = DEFAULT_DIALECTS,
+                            timeout: float = 5.0) -&gt; str: ...
+
+    # 簡易構築
+    @classmethod
+    def from_discovery(cls, **kwargs) -&gt; &quot;DatabaseManager&quot;: ...
+</code></pre>
+<p>非同期版 (<code>AsyncDatabaseManager</code>) は同等の <code>async</code>/<code>await</code> メソッドを備えます。</p>
+<hr />
+<h2 id="8">8. ドキュメント &amp; サイト公開</h2>
+<ul>
+<li><code>mkdocs.yml</code> でサイトメタ・ナビゲーション定義</li>
+<li>mkdocstrings で Docstring から API 自動生成</li>
+<li>GitHub Actions <code>docs.yml</code> が <code>main</code> push 時にビルド→<code>gh-pages</code> へデプロイ</li>
+<li>GitHub Settings → Pages で <strong>Source: GitHub Actions</strong> 指定</li>
+</ul>
+<hr />
+<h2 id="9-cicd">9. CI/CD 概要</h2>
+<h3 id="ciyml">ci.yml</h3>
+<ol>
+<li>OS×Python マトリクスで <strong>ruff → mypy → pytest(cov) → wheel</strong></li>
+<li>タグ push 時に <strong>Poetry publish (PyPI)</strong></li>
+</ol>
+<h3 id="docsyml">docs.yml</h3>
+<ol>
+<li>Poetry install (<code>docs</code> extra) → <code>mkdocs build --strict</code></li>
+<li><code>actions/upload-pages-artifact</code> → <code>actions/deploy-pages</code></li>
+</ol>
+<hr />
+<h2 id="10">10. 開発ワークフロー</h2>
+<pre><code class="language-bash"># セットアップ
+poetry install --with dev,docs
+
+# Lint / 型チェック / テスト
+poetry run ruff .
+poetry run mypy uniconndbbridge
+poetry run pytest -q --cov=uniconndbbridge
+
+# ドキュメント編集
+poetry run mkdocs serve
+
+# リリース
+poetry version 25.6.1
+git tag -s 25.6.1 -m &quot;Release 25.6.1&quot;
+git push &amp;&amp; git push --tags
+</code></pre>
+<hr />
+<h2 id="11">11. 拡張ロードマップ（抜粋）</h2>
+<ol>
+<li>マルチレプリカ自動ルーティング (<code>READ/WRITE</code> 切替)</li>
+<li>Prometheus メトリクスエクスポータ</li>
+<li>NoSQL Dialect (MongoSQL 等) ブリッジ</li>
+<li>CLI ツール <code>ucdb</code> での対話的アクセス</li>
+</ol>
+<hr />
+<h3 id="_1">🎉 結論</h3>
+<p><strong>UniConnDBBridge</strong> は</p>
+<ul>
+<li><strong>全主要 RDBMS ＋ 多様な認証</strong> を「extras &amp; プラグイン」で柔軟サポート</li>
+<li><strong>URL 自動探索</strong> と <strong>接続情報可視化</strong> でユーザー操作を最小化</li>
+<li><strong>Poetry・MkDocs・GitHub Actions</strong> によるモダンなライブラリ運用を標準装備</li>
+</ul>
+<p>この最終仕様を基に、すぐにでも実装と公開を始められます。
+追加の質問やレビュー依頼があれば、お気軽にどうぞ！</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+    
+  </body>
+</html>

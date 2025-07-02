@@ -1,0 +1,1367 @@
+
+<!doctype html>
+<html lang="ja" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>詳細設計書 - UniConnDBBridge</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.342714a4.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#5" class="md-skip">
+          コンテンツにスキップ
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="ヘッダー">
+    <a href="../.." title="UniConnDBBridge" class="md-header__button md-logo" aria-label="UniConnDBBridge" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            UniConnDBBridge
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              詳細設計書
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="検索" placeholder="検索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="検索">
+        
+        <button type="reset" class="md-search__icon md-icon" title="クリア" aria-label="クリア" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            検索を初期化
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/vavavavavavavavava/UniConnDBBridge" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vavavavavavavavava/UniConnDBBridge
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="ナビゲーション" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="UniConnDBBridge" class="md-nav__button md-logo" aria-label="UniConnDBBridge" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    UniConnDBBridge
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/vavavavavavavavava/UniConnDBBridge" title="リポジトリへ" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    vavavavavavavavava/UniConnDBBridge
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ホーム
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    リファレンス
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目次">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目次
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. ユーティリティ詳細設計
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. ユーティリティ詳細設計">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-crud" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.1 CRUD ヘルパー
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      5.2 マイグレーションヘルパー
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. ロギング・モニタリング詳細設計
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. ロギング・モニタリング詳細設計">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.1 ロギング設定
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-opentelemetry" class="md-nav__link">
+    <span class="md-ellipsis">
+      6.2 OpenTelemetry 統合
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. テスト戦略詳細
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. テスト戦略詳細">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 ユニットテスト構造
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 統合テスト
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 モックテスト
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. パフォーマンス最適化
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. パフォーマンス最適化">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#81" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.1 接続プーリング最適化
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#82" class="md-nav__link">
+    <span class="md-ellipsis">
+      8.2 クエリ最適化
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. セキュリティ考慮事項
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. セキュリティ考慮事項">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#91" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.1 認証情報の保護
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#92-sql" class="md-nav__link">
+    <span class="md-ellipsis">
+      9.2 SQL インジェクション対策
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. 実装スケジュール
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="10. 実装スケジュール">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      フェーズ 1: 基盤実装
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      フェーズ 2: 機能拡張
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      フェーズ 3: 品質保証
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      フェーズ 4: 最適化と公開
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>詳細設計書</h1>
+
+<pre><code class="language-python">        # パスワードをトークンに置換
+        new_netloc = f&quot;{parsed.username}:{token}@{parsed.hostname}&quot;
+        if parsed.port:
+            new_netloc += f&quot;:{parsed.port}&quot;
+
+        # 新しい URL を構築
+        new_parsed = parsed._replace(netloc=new_netloc)
+        return urlunparse(new_parsed)
+
+    def configure_engine_args(self) -&gt; Dict[str, Any]:
+        # プール設定を調整（トークンの有効期限対応）
+        return {
+            &quot;pool_recycle&quot;: 900,  # 15分でリサイクル
+            &quot;pool_pre_ping&quot;: True
+        }
+
+    async def configure_engine_args_async(self) -&gt; Dict[str, Any]:
+        # 非同期版も同じ設定
+        return self.configure_engine_args()
+</code></pre>
+<h2 id="5">5. ユーティリティ詳細設計</h2>
+<h3 id="51-crud">5.1 CRUD ヘルパー</h3>
+<pre><code class="language-python"># utils/crud.py
+from typing import Type, List, Dict, Any, Optional
+from sqlalchemy import select, insert, update, delete
+from sqlalchemy.orm import DeclarativeBase
+
+class CRUDMixin:
+    &quot;&quot;&quot;CRUD 操作ミックスイン&quot;&quot;&quot;
+
+    def __init__(self, manager: Union[DatabaseManager, AsyncDatabaseManager]):
+        self.manager = manager
+
+    # 同期版 CRUD
+    def create(
+        self,
+        model: Type[DeclarativeBase],
+        **values: Any
+    ) -&gt; DeclarativeBase:
+        &quot;&quot;&quot;レコード作成&quot;&quot;&quot;
+        with self.manager.session() as session:
+            instance = model(**values)
+            session.add(instance)
+            session.flush()
+            session.refresh(instance)
+            return instance
+
+    def read(
+        self,
+        model: Type[DeclarativeBase],
+        **filters: Any
+    ) -&gt; Optional[DeclarativeBase]:
+        &quot;&quot;&quot;単一レコード読み取り&quot;&quot;&quot;
+        with self.manager.session() as session:
+            stmt = select(model).filter_by(**filters)
+            return session.execute(stmt).scalar_one_or_none()
+
+    def read_many(
+        self,
+        model: Type[DeclarativeBase],
+        limit: Optional[int] = None,
+        offset: Optional[int] = None,
+        **filters: Any
+    ) -&gt; List[DeclarativeBase]:
+        &quot;&quot;&quot;複数レコード読み取り&quot;&quot;&quot;
+        with self.manager.session() as session:
+            stmt = select(model).filter_by(**filters)
+            if limit:
+                stmt = stmt.limit(limit)
+            if offset:
+                stmt = stmt.offset(offset)
+            return list(session.execute(stmt).scalars())
+
+    def update(
+        self,
+        model: Type[DeclarativeBase],
+        values: Dict[str, Any],
+        **filters: Any
+    ) -&gt; int:
+        &quot;&quot;&quot;レコード更新&quot;&quot;&quot;
+        with self.manager.session() as session:
+            stmt = update(model).filter_by(**filters).values(**values)
+            result = session.execute(stmt)
+            return result.rowcount
+
+    def delete(
+        self,
+        model: Type[DeclarativeBase],
+        **filters: Any
+    ) -&gt; int:
+        &quot;&quot;&quot;レコード削除&quot;&quot;&quot;
+        with self.manager.session() as session:
+            stmt = delete(model).filter_by(**filters)
+            result = session.execute(stmt)
+            return result.rowcount
+
+
+class AsyncCRUDMixin:
+    &quot;&quot;&quot;非同期 CRUD 操作ミックスイン&quot;&quot;&quot;
+
+    def __init__(self, manager: AsyncDatabaseManager):
+        self.manager = manager
+
+    async def create(
+        self,
+        model: Type[DeclarativeBase],
+        **values: Any
+    ) -&gt; DeclarativeBase:
+        &quot;&quot;&quot;非同期レコード作成&quot;&quot;&quot;
+        async with self.manager.session() as session:
+            instance = model(**values)
+            session.add(instance)
+            await session.flush()
+            await session.refresh(instance)
+            return instance
+
+    # ... (他の非同期 CRUD メソッド)
+</code></pre>
+<h3 id="52">5.2 マイグレーションヘルパー</h3>
+<pre><code class="language-python"># utils/migration.py
+from pathlib import Path
+from typing import Optional
+import textwrap
+
+class AlembicHelper:
+    &quot;&quot;&quot;Alembic 設定ヘルパー&quot;&quot;&quot;
+
+    @staticmethod
+    def generate_alembic_ini(
+        manager: DatabaseManager,
+        script_location: str = &quot;migrations&quot;,
+        compare_type: bool = True,
+        compare_server_default: bool = True
+    ) -&gt; str:
+        &quot;&quot;&quot;alembic.ini テンプレート生成&quot;&quot;&quot;
+
+        template = textwrap.dedent(f&quot;&quot;&quot;
+        [alembic]
+        script_location = {script_location}
+        prepend_sys_path = .
+        version_path_separator = os
+        sqlalchemy.url = {manager._url}
+
+        [post_write_hooks]
+        hooks = black
+        black.type = console_scripts
+        black.entrypoint = black
+        black.options = -l 88
+
+        [loggers]
+        keys = root,sqlalchemy,alembic
+
+        [handlers]
+        keys = console
+
+        [formatters]
+        keys = generic
+
+        [logger_root]
+        level = WARN
+        handlers = console
+        qualname =
+
+        [logger_sqlalchemy]
+        level = WARN
+        handlers =
+        qualname = sqlalchemy.engine
+
+        [logger_alembic]
+        level = INFO
+        handlers =
+        qualname = alembic
+
+        [handler_console]
+        class = StreamHandler
+        args = (sys.stderr,)
+        level = NOTSET
+        formatter = generic
+
+        [formatter_generic]
+        format = %(levelname)-5.5s [%(name)s] %(message)s
+        datefmt = %H:%M:%S
+        &quot;&quot;&quot;)
+
+        return template.strip()
+
+    @staticmethod
+    def generate_env_py(
+        target_metadata: Optional[MetaData] = None,
+        compare_type: bool = True,
+        compare_server_default: bool = True
+    ) -&gt; str:
+        &quot;&quot;&quot;env.py テンプレート生成&quot;&quot;&quot;
+
+        template = textwrap.dedent(&quot;&quot;&quot;
+        from logging.config import fileConfig
+        from sqlalchemy import engine_from_config
+        from sqlalchemy import pool
+        from alembic import context
+
+        # this is the Alembic Config object
+        config = context.config
+
+        # Interpret the config file for Python logging
+        if config.config_file_name is not None:
+            fileConfig(config.config_file_name)
+
+        # add your model's MetaData object here
+        target_metadata = None  # TODO: Import your metadata
+
+        def run_migrations_offline() -&gt; None:
+            '''Run migrations in 'offline' mode.'''
+            url = config.get_main_option(&quot;sqlalchemy.url&quot;)
+            context.configure(
+                url=url,
+                target_metadata=target_metadata,
+                literal_binds=True,
+                dialect_opts={&quot;paramstyle&quot;: &quot;named&quot;},
+                compare_type={compare_type},
+                compare_server_default={compare_server_default}
+            )
+
+            with context.begin_transaction():
+                context.run_migrations()
+
+        def run_migrations_online() -&gt; None:
+            '''Run migrations in 'online' mode.'''
+            connectable = engine_from_config(
+                config.get_section(config.config_ini_section),
+                prefix=&quot;sqlalchemy.&quot;,
+                poolclass=pool.NullPool,
+            )
+
+            with connectable.connect() as connection:
+                context.configure(
+                    connection=connection,
+                    target_metadata=target_metadata,
+                    compare_type={compare_type},
+                    compare_server_default={compare_server_default}
+                )
+
+                with context.begin_transaction():
+                    context.run_migrations()
+
+        if context.is_offline_mode():
+            run_migrations_offline()
+        else:
+            run_migrations_online()
+        &quot;&quot;&quot;).format(
+            compare_type=compare_type,
+            compare_server_default=compare_server_default
+        )
+
+        return template.strip()
+</code></pre>
+<h2 id="6">6. ロギング・モニタリング詳細設計</h2>
+<h3 id="61">6.1 ロギング設定</h3>
+<pre><code class="language-python"># logging_config.py
+import logging
+import logging.config
+from typing import Dict, Any
+
+def setup_logging(
+    level: str = &quot;INFO&quot;,
+    format: str = &quot;%(asctime)s - %(name)s - %(levelname)s - %(message)s&quot;,
+    enable_sql_echo: bool = False
+) -&gt; None:
+    &quot;&quot;&quot;ロギング設定&quot;&quot;&quot;
+
+    config: Dict[str, Any] = {
+        &quot;version&quot;: 1,
+        &quot;disable_existing_loggers&quot;: False,
+        &quot;formatters&quot;: {
+            &quot;default&quot;: {
+                &quot;format&quot;: format,
+                &quot;datefmt&quot;: &quot;%Y-%m-%d %H:%M:%S&quot;
+            },
+            &quot;detailed&quot;: {
+                &quot;format&quot;: &quot;%(asctime)s - %(name)s - %(levelname)s - %(filename)s:%(lineno)d - %(message)s&quot;,
+                &quot;datefmt&quot;: &quot;%Y-%m-%d %H:%M:%S&quot;
+            }
+        },
+        &quot;handlers&quot;: {
+            &quot;console&quot;: {
+                &quot;class&quot;: &quot;logging.StreamHandler&quot;,
+                &quot;level&quot;: level,
+                &quot;formatter&quot;: &quot;default&quot;,
+                &quot;stream&quot;: &quot;ext://sys.stdout&quot;
+            },
+            &quot;file&quot;: {
+                &quot;class&quot;: &quot;logging.handlers.RotatingFileHandler&quot;,
+                &quot;level&quot;: &quot;DEBUG&quot;,
+                &quot;formatter&quot;: &quot;detailed&quot;,
+                &quot;filename&quot;: &quot;uniconndbbridge.log&quot;,
+                &quot;maxBytes&quot;: 10485760,  # 10MB
+                &quot;backupCount&quot;: 5
+            }
+        },
+        &quot;loggers&quot;: {
+            &quot;uniconndbbridge&quot;: {
+                &quot;level&quot;: level,
+                &quot;handlers&quot;: [&quot;console&quot;, &quot;file&quot;],
+                &quot;propagate&quot;: False
+            },
+            &quot;sqlalchemy.engine&quot;: {
+                &quot;level&quot;: &quot;INFO&quot; if enable_sql_echo else &quot;WARNING&quot;,
+                &quot;handlers&quot;: [&quot;console&quot;],
+                &quot;propagate&quot;: False
+            },
+            &quot;sqlalchemy.pool&quot;: {
+                &quot;level&quot;: &quot;DEBUG&quot; if enable_sql_echo else &quot;WARNING&quot;,
+                &quot;handlers&quot;: [&quot;console&quot;],
+                &quot;propagate&quot;: False
+            }
+        },
+        &quot;root&quot;: {
+            &quot;level&quot;: &quot;WARNING&quot;,
+            &quot;handlers&quot;: [&quot;console&quot;]
+        }
+    }
+
+    logging.config.dictConfig(config)
+</code></pre>
+<h3 id="62-opentelemetry">6.2 OpenTelemetry 統合</h3>
+<pre><code class="language-python"># telemetry.py
+from typing import Optional, Dict, Any
+from contextlib import contextmanager
+from opentelemetry import trace
+from opentelemetry.trace import Tracer, Span
+from opentelemetry.instrumentation.sqlalchemy import SQLAlchemyInstrumentor
+
+class TelemetryManager:
+    &quot;&quot;&quot;テレメトリ管理&quot;&quot;&quot;
+
+    def __init__(self, service_name: str = &quot;uniconndbbridge&quot;):
+        self.service_name = service_name
+        self.tracer: Optional[Tracer] = None
+        self._instrumentor: Optional[SQLAlchemyInstrumentor] = None
+
+    def initialize(
+        self,
+        endpoint: Optional[str] = None,
+        headers: Optional[Dict[str, str]] = None
+    ) -&gt; None:
+        &quot;&quot;&quot;テレメトリ初期化&quot;&quot;&quot;
+        from opentelemetry.exporter.otlp.proto.grpc.trace_exporter import OTLPSpanExporter
+        from opentelemetry.sdk.trace import TracerProvider
+        from opentelemetry.sdk.trace.export import BatchSpanProcessor
+        from opentelemetry.sdk.resources import Resource
+
+        # リソース設定
+        resource = Resource.create({
+            &quot;service.name&quot;: self.service_name,
+            &quot;service.version&quot;: &quot;25.6.0&quot;
+        })
+
+        # プロバイダー設定
+        provider = TracerProvider(resource=resource)
+
+        # エクスポーター設定
+        if endpoint:
+            exporter = OTLPSpanExporter(
+                endpoint=endpoint,
+                headers=headers
+            )
+            processor = BatchSpanProcessor(exporter)
+            provider.add_span_processor(processor)
+
+        # グローバル設定
+        trace.set_tracer_provider(provider)
+        self.tracer = trace.get_tracer(__name__)
+
+        # SQLAlchemy インストルメンテーション
+        self._instrumentor = SQLAlchemyInstrumentor()
+
+    def instrument_engine(self, engine: Engine) -&gt; None:
+        &quot;&quot;&quot;Engine にテレメトリを適用&quot;&quot;&quot;
+        if self._instrumentor:
+            self._instrumentor.instrument(
+                engine=engine,
+                service=self.service_name
+            )
+
+    @contextmanager
+    def span(self, name: str, **attributes: Any):
+        &quot;&quot;&quot;スパンコンテキストマネージャー&quot;&quot;&quot;
+        if not self.tracer:
+            yield None
+            return
+
+        with self.tracer.start_as_current_span(name) as span:
+            for key, value in attributes.items():
+                span.set_attribute(key, str(value))
+            yield span
+</code></pre>
+<h2 id="7">7. テスト戦略詳細</h2>
+<h3 id="71">7.1 ユニットテスト構造</h3>
+<pre><code class="language-python"># tests/test_core.py
+import pytest
+from unittest.mock import Mock, patch, MagicMock
+from sqlalchemy import create_engine
+from uniconndbbridge import DatabaseManager, DBConfig
+
+class TestDatabaseManager:
+    &quot;&quot;&quot;DatabaseManager ユニットテスト&quot;&quot;&quot;
+
+    @pytest.fixture
+    def mock_engine(self):
+        &quot;&quot;&quot;モック Engine&quot;&quot;&quot;
+        engine = MagicMock()
+        engine.url.database = &quot;testdb&quot;
+        engine.url.host = &quot;localhost&quot;
+        engine.url.port = 5432
+        engine.url.username = &quot;testuser&quot;
+        engine.dialect.name = &quot;postgresql&quot;
+        engine.dialect.driver = &quot;psycopg2&quot;
+        return engine
+
+    @pytest.fixture
+    def db_manager(self, mock_engine):
+        &quot;&quot;&quot;テスト用 DatabaseManager&quot;&quot;&quot;
+        with patch(&quot;uniconndbbridge.core.create_engine&quot;, return_value=mock_engine):
+            return DatabaseManager(url=&quot;postgresql://testuser:pass@localhost/testdb&quot;)
+
+    def test_initialization_with_url(self):
+        &quot;&quot;&quot;URL での初期化テスト&quot;&quot;&quot;
+        url = &quot;postgresql://user:pass@localhost/db&quot;
+        with patch(&quot;uniconndbbridge.core.create_engine&quot;) as mock_create:
+            manager = DatabaseManager(url=url)
+            assert manager._url == url
+            assert manager._config is None
+
+    def test_initialization_with_config(self):
+        &quot;&quot;&quot;設定での初期化テスト&quot;&quot;&quot;
+        config = DBConfig(
+            dialect=&quot;postgresql&quot;,
+            user=&quot;testuser&quot;,
+            password=&quot;testpass&quot;,
+            host=&quot;localhost&quot;,
+            database=&quot;testdb&quot;
+        )
+
+        with patch(&quot;uniconndbbridge.core.create_engine&quot;):
+            manager = DatabaseManager(config=config)
+            assert manager._config == config
+            assert &quot;postgresql&quot; in manager._url
+
+    def test_connection_info(self, db_manager, mock_engine):
+        &quot;&quot;&quot;接続情報取得テスト&quot;&quot;&quot;
+        with patch.object(db_manager, &quot;engine&quot;, mock_engine):
+            info = db_manager.connect_info()
+
+            assert info.dialect == &quot;postgresql&quot;
+            assert info.driver == &quot;psycopg2&quot;
+            assert info.database == &quot;testdb&quot;
+            assert info.host == &quot;localhost&quot;
+            assert info.port == 5432
+            assert info.user == &quot;testuser&quot;
+
+    @pytest.mark.parametrize(&quot;dialect,expected_port&quot;, [
+        (&quot;postgresql&quot;, 5432),
+        (&quot;mysql&quot;, 3306),
+        (&quot;oracle&quot;, 1521),
+        (&quot;mssql&quot;, 1433)
+    ])
+    def test_default_ports(self, dialect, expected_port):
+        &quot;&quot;&quot;デフォルトポートテスト&quot;&quot;&quot;
+        from uniconndbbridge.registry import DriverRegistry
+
+        info = DriverRegistry.get_dialect_info(dialect)
+        assert info is not None
+        assert info.default_port == expected_port
+</code></pre>
+<h3 id="72">7.2 統合テスト</h3>
+<pre><code class="language-python"># tests/integration/test_real_databases.py
+import pytest
+import os
+from uniconndbbridge import DatabaseManager, AsyncDatabaseManager
+from sqlalchemy import text
+
+# 環境変数から接続情報取得
+POSTGRES_URL = os.getenv(&quot;TEST_POSTGRES_URL&quot;)
+MYSQL_URL = os.getenv(&quot;TEST_MYSQL_URL&quot;)
+
+@pytest.mark.integration
+@pytest.mark.skipif(not POSTGRES_URL, reason=&quot;PostgreSQL not configured&quot;)
+class TestPostgreSQLIntegration:
+    &quot;&quot;&quot;PostgreSQL 統合テスト&quot;&quot;&quot;
+
+    def test_sync_connection(self):
+        &quot;&quot;&quot;同期接続テスト&quot;&quot;&quot;
+        with DatabaseManager(url=POSTGRES_URL) as manager:
+            result = manager.execute(text(&quot;SELECT version()&quot;))
+            version = result.scalar()
+            assert &quot;PostgreSQL&quot; in version
+
+    @pytest.mark.asyncio
+    async def test_async_connection(self):
+        &quot;&quot;&quot;非同期接続テスト&quot;&quot;&quot;
+        async with AsyncDatabaseManager(url=POSTGRES_URL) as manager:
+            result = await manager.execute(text(&quot;SELECT version()&quot;))
+            version = result.scalar()
+            assert &quot;PostgreSQL&quot; in version
+
+    def test_discovery(self):
+        &quot;&quot;&quot;接続探索テスト&quot;&quot;&quot;
+        # URL から接続情報を抽出
+        from urllib.parse import urlparse
+        parsed = urlparse(POSTGRES_URL)
+
+        discovered_url = DatabaseManager.discover_connection(
+            user=parsed.username,
+            password=parsed.password,
+            host=parsed.hostname,
+            port=parsed.port,
+            database=parsed.path.lstrip(&quot;/&quot;),
+            dialects=[&quot;postgresql&quot;]
+        )
+
+        assert &quot;postgresql&quot; in discovered_url
+</code></pre>
+<h3 id="73">7.3 モックテスト</h3>
+<pre><code class="language-python"># tests/test_discovery.py
+import pytest
+from unittest.mock import patch, MagicMock
+from uniconndbbridge.discovery import ConnectionDiscovery
+from uniconndbbridge.exceptions import DiscoveryError
+
+class TestConnectionDiscovery:
+    &quot;&quot;&quot;接続探索テスト&quot;&quot;&quot;
+
+    @patch(&quot;uniconndbbridge.discovery.create_engine&quot;)
+    def test_successful_discovery(self, mock_create_engine):
+        &quot;&quot;&quot;成功する探索テスト&quot;&quot;&quot;
+        # 最初の試行で成功
+        mock_engine = MagicMock()
+        mock_create_engine.return_value = mock_engine
+
+        # connect() が成功
+        mock_conn = MagicMock()
+        mock_engine.connect.return_value.__enter__.return_value = mock_conn
+
+        url = ConnectionDiscovery.discover_connection(
+            user=&quot;testuser&quot;,
+            password=&quot;testpass&quot;,
+            host=&quot;localhost&quot;,
+            dialects=[&quot;postgresql&quot;, &quot;mysql&quot;]
+        )
+
+        assert &quot;postgresql&quot; in url
+        assert &quot;testuser:testpass@localhost&quot; in url
+
+    @patch(&quot;uniconndbbridge.discovery.create_engine&quot;)
+    def test_all_dialects_fail(self, mock_create_engine):
+        &quot;&quot;&quot;全方言が失敗するテスト&quot;&quot;&quot;
+        # すべての接続試行が失敗
+        mock_create_engine.side_effect = Exception(&quot;Connection failed&quot;)
+
+        with pytest.raises(DiscoveryError) as exc_info:
+            ConnectionDiscovery.discover_connection(
+                user=&quot;testuser&quot;,
+                password=&quot;testpass&quot;,
+                host=&quot;localhost&quot;,
+                dialects=[&quot;postgresql&quot;, &quot;mysql&quot;]
+            )
+
+        assert &quot;No valid connection found&quot; in str(exc_info.value)
+</code></pre>
+<h2 id="8">8. パフォーマンス最適化</h2>
+<h3 id="81">8.1 接続プーリング最適化</h3>
+<pre><code class="language-python"># optimizations/pooling.py
+from typing import Dict, Any
+from sqlalchemy.pool import QueuePool, NullPool, StaticPool
+
+class PoolOptimizer:
+    &quot;&quot;&quot;プール最適化ヘルパー&quot;&quot;&quot;
+
+    @staticmethod
+    def get_optimal_pool_class(dialect: str, is_async: bool = False):
+        &quot;&quot;&quot;方言に最適なプールクラスを選択&quot;&quot;&quot;
+
+        if dialect == &quot;sqlite&quot;:
+            # SQLite はシングルスレッドなので StaticPool
+            return StaticPool
+        elif is_async:
+            # 非同期は通常 NullPool が推奨
+            return NullPool
+        else:
+            # その他は QueuePool
+            return QueuePool
+
+    @staticmethod
+    def get_optimal_pool_size(dialect: str, expected_load: str = &quot;medium&quot;) -&gt; Dict[str, int]:
+        &quot;&quot;&quot;負荷に応じた最適なプールサイズ&quot;&quot;&quot;
+
+        configs = {
+            &quot;low&quot;: {&quot;pool_size&quot;: 5, &quot;max_overflow&quot;: 5},
+            &quot;medium&quot;: {&quot;pool_size&quot;: 10, &quot;max_overflow&quot;: 10},
+            &quot;high&quot;: {&quot;pool_size&quot;: 20, &quot;max_overflow&quot;: 20},
+            &quot;extreme&quot;: {&quot;pool_size&quot;: 50, &quot;max_overflow&quot;: 50}
+        }
+
+        base_config = configs.get(expected_load, configs[&quot;medium&quot;])
+
+        # 方言固有の調整
+        if dialect == &quot;oracle&quot;:
+            # Oracle は接続コストが高いのでプールサイズを増やす
+            base_config[&quot;pool_size&quot;] = int(base_config[&quot;pool_size&quot;] * 1.5)
+        elif dialect == &quot;sqlite&quot;:
+            # SQLite は接続が軽量
+            base_config[&quot;pool_size&quot;] = 1
+            base_config[&quot;max_overflow&quot;] = 0
+
+        return base_config
+</code></pre>
+<h3 id="82">8.2 クエリ最適化</h3>
+<pre><code class="language-python"># optimizations/query.py
+from typing import List, Any
+from sqlalchemy import text
+from sqlalchemy.sql import Select
+
+class QueryOptimizer:
+    &quot;&quot;&quot;クエリ最適化ヘルパー&quot;&quot;&quot;
+
+    @staticmethod
+    def add_execution_options(stmt: Select, dialect: str) -&gt; Select:
+        &quot;&quot;&quot;方言固有の実行オプション追加&quot;&quot;&quot;
+
+        if dialect == &quot;postgresql&quot;:
+            # PostgreSQL 固有の最適化
+            return stmt.execution_options(
+                postgresql_readonly=True,
+                postgresql_deferrable=True
+            )
+        elif dialect == &quot;mysql&quot;:
+            # MySQL 固有の最適化
+            return stmt.execution_options(
+                mysql_buffered=True
+            )
+
+        return stmt
+
+    @staticmethod
+    def optimize_bulk_insert(
+        values: List[Dict[str, Any]],
+        dialect: str
+    ) -&gt; Dict[str, Any]:
+        &quot;&quot;&quot;バルクインサート最適化&quot;&quot;&quot;
+
+        if dialect == &quot;postgresql&quot;:
+            # PostgreSQL は COPY が最速
+            return {
+                &quot;method&quot;: &quot;copy&quot;,
+                &quot;chunk_size&quot;: 10000
+            }
+        elif dialect == &quot;mysql&quot;:
+            # MySQL は multi-value insert
+            return {
+                &quot;method&quot;: &quot;multi&quot;,
+                &quot;chunk_size&quot;: 5000
+            }
+        else:
+            # デフォルト
+            return {
+                &quot;method&quot;: &quot;multi&quot;,
+                &quot;chunk_size&quot;: 1000
+            }
+</code></pre>
+<h2 id="9">9. セキュリティ考慮事項</h2>
+<h3 id="91">9.1 認証情報の保護</h3>
+<pre><code class="language-python"># security/credentials.py
+import os
+from typing import Optional
+from cryptography.fernet import Fernet
+
+class CredentialManager:
+    &quot;&quot;&quot;認証情報管理&quot;&quot;&quot;
+
+    def __init__(self, key: Optional[bytes] = None):
+        if key is None:
+            key = os.getenv(&quot;UNICONNDB_ENCRYPTION_KEY&quot;)
+            if not key:
+                key = Fernet.generate_key()
+
+        self.cipher = Fernet(key)
+
+    def encrypt_password(self, password: str) -&gt; str:
+        &quot;&quot;&quot;パスワード暗号化&quot;&quot;&quot;
+        return self.cipher.encrypt(password.encode()).decode()
+
+    def decrypt_password(self, encrypted: str) -&gt; str:
+        &quot;&quot;&quot;パスワード復号&quot;&quot;&quot;
+        return self.cipher.decrypt(encrypted.encode()).decode()
+
+    @staticmethod
+    def mask_url(url: str) -&gt; str:
+        &quot;&quot;&quot;URL のパスワード部分をマスク&quot;&quot;&quot;
+        from urllib.parse import urlparse, urlunparse
+
+        parsed = urlparse(url)
+        if parsed.password:
+            # パスワードを *** に置換
+            masked_netloc = parsed.netloc.replace(
+                f&quot;:{parsed.password}@&quot;,
+                &quot;:***@&quot;
+            )
+            masked = parsed._replace(netloc=masked_netloc)
+            return urlunparse(masked)
+
+        return url
+</code></pre>
+<h3 id="92-sql">9.2 SQL インジェクション対策</h3>
+<pre><code class="language-python"># security/validation.py
+import re
+from typing import Any
+
+class SQLValidator:
+    &quot;&quot;&quot;SQL バリデーション&quot;&quot;&quot;
+
+    # 危険なパターン
+    DANGEROUS_PATTERNS = [
+        r&quot;;\s*(DROP|DELETE|TRUNCATE|UPDATE|INSERT)&quot;,
+        r&quot;--&quot;,
+        r&quot;/\*.*\*/&quot;,
+        r&quot;xp_cmdshell&quot;,
+        r&quot;exec\s*\(&quot;,
+        r&quot;UNION\s+SELECT&quot;
+    ]
+
+    @classmethod
+    def is_safe_identifier(cls, identifier: str) -&gt; bool:
+        &quot;&quot;&quot;識別子の安全性チェック&quot;&quot;&quot;
+        # 英数字とアンダースコアのみ許可
+        return bool(re.match(r&quot;^[a-zA-Z_][a-zA-Z0-9_]*$&quot;, identifier))
+
+    @classmethod
+    def validate_query(cls, query: str) -&gt; bool:
+        &quot;&quot;&quot;クエリの危険性チェック&quot;&quot;&quot;
+        for pattern in cls.DANGEROUS_PATTERNS:
+            if re.search(pattern, query, re.IGNORECASE):
+                return False
+        return True
+
+    @classmethod
+    def escape_identifier(cls, identifier: str, dialect: str) -&gt; str:
+        &quot;&quot;&quot;識別子のエスケープ&quot;&quot;&quot;
+        if dialect == &quot;postgresql&quot;:
+            return f'&quot;{identifier}&quot;'
+        elif dialect == &quot;mysql&quot;:
+            return f&quot;`{identifier}`&quot;
+        elif dialect == &quot;mssql&quot;:
+            return f&quot;[{identifier}]&quot;
+        else:
+            return identifier
+</code></pre>
+<h2 id="10">10. 実装スケジュール</h2>
+<h3 id="1">フェーズ 1: 基盤実装</h3>
+<ol>
+<li>プロジェクト構造セットアップ</li>
+<li><code>DBConfig</code> と基本データ構造</li>
+<li><code>DriverRegistry</code> 実装</li>
+<li>基本的な <code>DatabaseManager</code> 実装</li>
+</ol>
+<h3 id="2">フェーズ 2: 機能拡張</h3>
+<ol>
+<li><code>ConnectionDiscovery</code> 実装</li>
+<li><code>AsyncDatabaseManager</code> 実装</li>
+<li>認証プラグインシステム</li>
+<li>CRUD ユーティリティ</li>
+</ol>
+<h3 id="3">フェーズ 3: 品質保証</h3>
+<ol>
+<li>ユニットテスト作成</li>
+<li>統合テスト環境構築</li>
+<li>ドキュメント作成</li>
+<li>CI/CD パイプライン設定</li>
+</ol>
+<h3 id="4">フェーズ 4: 最適化と公開</h3>
+<ol>
+<li>パフォーマンス最適化</li>
+<li>セキュリティ強化</li>
+<li>サンプルコード作成</li>
+<li>PyPI 公開準備</li>
+</ol>
+<hr />
+<p>この詳細設計書により、UniConnDBBridge の実装に必要なすべての技術的詳細が定義されました。各コンポーネントは疎結合で、テスト可能で、拡張可能な設計となっています。</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "\u30b3\u30d4\u30fc\u3057\u307e\u3057\u305f", "clipboard.copy": "\u30af\u30ea\u30c3\u30d7\u30dc\u30fc\u30c9\u3078\u30b3\u30d4\u30fc", "search.result.more.one": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3082\u30461\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.more.other": "\u3053\u306e\u30da\u30fc\u30b8\u5185\u306b\u3042\u3068#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.none": "\u4f55\u3082\u898b\u3064\u304b\u308a\u307e\u305b\u3093\u3067\u3057\u305f", "search.result.one": "1\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.other": "#\u4ef6\u898b\u3064\u304b\u308a\u307e\u3057\u305f", "search.result.placeholder": "\u691c\u7d22\u30ad\u30fc\u30ef\u30fc\u30c9\u3092\u5165\u529b\u3057\u3066\u304f\u3060\u3055\u3044", "search.result.term.missing": "\u691c\u7d22\u306b\u542b\u307e\u308c\u306a\u3044", "select.version": "\u30d0\u30fc\u30b8\u30e7\u30f3\u5207\u308a\u66ff\u3048"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+    
+  </body>
+</html>
