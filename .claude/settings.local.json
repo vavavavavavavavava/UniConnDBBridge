@@ -4,7 +4,12 @@
       "Bash(mkdir:*)",
       "Bash(poetry install:*)",
       "Bash(git add:*)",
-      "Bash(mv:*)"
+      "Bash(mv:*)",
+      "Bash(pytest:*)",
+      "Bash(python -m pytest -v --tb=short)",
+      "Bash(docker-compose:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(docker exec:*)"
     ],
     "deny": []
   }
