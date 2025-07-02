@@ -95,7 +95,7 @@ db_manager.close()
 
 ### 非同期処理
 
-#### 1. URL文字列を使用する場合
+#### URL文字列を使用する場合
 
 ```python
 import asyncio
@@ -116,31 +116,6 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
-```
-
-#### 2. 接続の自動検出
-
-ユーザー名とパスワードが分かっていれば、利用可能なデータベース接続を自動的に見つけることができます。
-
-```python
-from uniconndbbridge import DatabaseManager
-
-try:
-    # 利用可能な接続を探索
-    db_manager = DatabaseManager.from_discovery(
-        user="your_user",
-        password="your_password",
-        host="localhost"
-    )
-    print(f"接続成功: {db_manager.connect_info().dialect}")
-
-    # ... 処理 ...
-
-    db_manager.close()
-
-except DiscoveryError as e:
-    print(f"接続の検出に失敗しました: {e}")
-
 ```
 
 ## 認証
