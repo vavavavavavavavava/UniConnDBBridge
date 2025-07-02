@@ -70,27 +70,6 @@ class AuthenticationError(UniConnDBError):
         )
 
 
-class DiscoveryError(UniConnDBError):
-    """Raised when connection discovery fails."""
-
-    def __init__(
-        self,
-        message: str,
-        attempted_dialects: Optional[List[str]] = None,
-        failed_attempts: Optional[Dict[str, str]] = None,
-    ):
-        super().__init__(message)
-        self.attempted_dialects = attempted_dialects or []
-        self.failed_attempts = failed_attempts or {}
-
-        # Store discovery details
-        self.details.update(
-            {
-                "attempted_dialects": self.attempted_dialects,
-                "failed_attempts": self.failed_attempts,
-            }
-        )
-
 
 class ConfigurationError(UniConnDBError):
     """Raised when configuration is invalid."""

@@ -8,11 +8,9 @@ and authentication methods with both sync and async APIs.
 from .async_ import AsyncDatabaseManager
 from .config import ConnectionInfo, DBConfig
 from .core import DatabaseManager
-from .discovery import ConnectionDiscovery
 from .exceptions import (
     AuthenticationError,
     ConnectionError,
-    DiscoveryError,
     UniConnDBError,
 )
 
@@ -22,9 +20,7 @@ __all__ = [
     "ConnectionInfo",
     "DatabaseManager",
     "AsyncDatabaseManager",
-    "ConnectionDiscovery",
     "UniConnDBError",
     "ConnectionError",
     "AuthenticationError",
-    "DiscoveryError",
 ]

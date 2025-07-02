@@ -10,7 +10,8 @@
       "Bash(docker-compose:*)",
       "Bash(docker-compose up:*)",
       "Bash(docker exec:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(rm:*)"
     ],
     "deny": []
   }

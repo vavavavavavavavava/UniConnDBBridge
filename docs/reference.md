@@ -5,5 +5,3 @@
 ::: uniconndbbridge.async_.AsyncDatabaseManager
 
 ::: uniconndbbridge.config.DBConfig
-
-::: uniconndbbridge.discovery.ConnectionDiscovery

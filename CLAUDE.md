@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-UniConnDBBridge is a universal SQLAlchemy database manager that provides a unified interface for all database types with support for various authentication methods. The library supports both synchronous and asynchronous operations with automatic driver selection and connection discovery.
+UniConnDBBridge is a universal SQLAlchemy database manager that provides a unified interface for all database types with support for various authentication methods. The library supports both synchronous and asynchronous operations with automatic driver selection.
 
 ## Development Commands
 
@@ -78,11 +78,7 @@ mkdocs serve
    - Handles driver availability checking and installation commands
    - Supports custom dialect registration
 
-5. **ConnectionDiscovery** (`discovery.py`) - Automatic connection discovery
-   - Attempts to discover working connections across multiple dialects
-   - Useful for development and testing environments
-
-6. **AuthPlugin** (`config.py`) - Authentication plugin system
+5. **AuthPlugin** (`config.py`) - Authentication plugin system
    - Base class for authentication methods (basic, SSL, Kerberos, IAM, etc.)
    - Plugins modify connection URLs and engine arguments
 

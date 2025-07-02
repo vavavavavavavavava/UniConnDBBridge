@@ -6,7 +6,6 @@ from uniconndbbridge.exceptions import (
     AuthenticationError,
     ConfigurationError,
     ConnectionError,
-    DiscoveryError,
     DriverNotFoundError,
     PoolError,
     TransactionError,
@@ -63,22 +62,6 @@ class TestCustomExceptions:
         assert error.details["auth_method"] == "password"
         assert error.details["user"] == "testuser"
 
-    def test_discovery_error(self):
-        """Test DiscoveryError."""
-        attempted_dialects = ["postgresql", "mysql"]
-        failed_attempts = {"postgresql": "Connection refused", "mysql": "Access denied"}
-
-        error = DiscoveryError(
-            "Discovery failed",
-            attempted_dialects=attempted_dialects,
-            failed_attempts=failed_attempts,
-        )
-
-        assert str(error) == "Discovery failed"
-        assert error.attempted_dialects == attempted_dialects
-        assert error.failed_attempts == failed_attempts
-        assert error.details["attempted_dialects"] == attempted_dialects
-        assert error.details["failed_attempts"] == failed_attempts
 
     def test_configuration_error(self):
         """Test ConfigurationError."""
