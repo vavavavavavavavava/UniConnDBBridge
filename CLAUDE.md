@@ -9,6 +9,7 @@ UniConnDBBridge is a universal SQLAlchemy database manager that provides a unifi
 ## Development Commands
 
 ### Testing
+
 ```bash
 # Run all tests
 pytest
@@ -24,6 +25,7 @@ pytest -k "async" --asyncio-mode=auto
 ```
 
 ### Code Quality
+
 ```bash
 # Run type checking
 mypy uniconndbbridge/
@@ -34,6 +36,7 @@ ruff format uniconndbbridge/
 ```
 
 ### Package Management
+
 ```bash
 # Install dependencies
 poetry install
@@ -49,6 +52,7 @@ poetry build
 ```
 
 ### Documentation
+
 ```bash
 # Build docs (if MkDocs is configured)
 mkdocs build
@@ -92,6 +96,7 @@ mkdocs serve
 ### Database Support
 
 The library supports major databases through the DriverRegistry:
+
 - PostgreSQL (psycopg2, asyncpg, pg8000)
 - MySQL (mysqlclient, pymysql, aiomysql, asyncmy)
 - SQLite (built-in, aiosqlite)
@@ -129,6 +134,7 @@ The library supports major databases through the DriverRegistry:
 ### Dependencies
 
 Core dependencies are minimal:
+
 - SQLAlchemy >= 2.0 (core requirement)
 - typing-extensions (for older Python versions)
 - Optional database drivers based on usage
