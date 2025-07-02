@@ -66,7 +66,7 @@ class TestDBConfig:
         )
 
         url = config.to_url()
-        assert url == "sqlite:///path/to/db.sqlite"
+        assert url == "sqlite:////path/to/db.sqlite"
 
     def test_to_url_sqlite_memory(self):
         """Test URL generation for SQLite in-memory."""
