@@ -6,11 +6,11 @@ services:
       MYSQL_ROOT_PASSWORD: testpassword
       MYSQL_DATABASE: testdb
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - ./tests/docker/mysql/init:/docker-entrypoint-initdb.d
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-ptestpassword"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-ptestpassword" ]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -27,7 +27,7 @@ services:
     volumes:
       - ./tests/docker/postgres/init:/docker-entrypoint-initdb.d
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U testuser -d testdb"]
+      test: [ "CMD-SHELL", "pg_isready -U testuser -d testdb" ]
       interval: 10s
       timeout: 5s
       retries: 5

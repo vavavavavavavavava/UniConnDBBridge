@@ -1,6 +1,8 @@
 import pytest
+
 from uniconndbbridge.config import DBConfig
 from uniconndbbridge.core import DatabaseManager
+
 
 @pytest.fixture(scope="module")
 def mysql_config():
@@ -8,6 +10,7 @@ def mysql_config():
         dialect="mysql",
         driver="mysqlconnector",
         host="127.0.0.1",
+        port=3307,
         user="testuser",
         password="testpassword",
         database="testdb"
