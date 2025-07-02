@@ -1,0 +1,21 @@
+site_name: UniConnDBBridge
+
+theme:
+  name: material
+  language: ja
+
+repo_url: https://github.com/vavavavavavavavava/UniConnDBBridge
+repo_name: vavavavavavavavava/UniConnDBBridge
+
+plugins:
+  - search
+  - mkdocstrings:
+      handlers:
+        python:
+          options:
+            show_root_heading: yes
+            show_source: yes
+
+nav:
+  - ホーム: index.md
+  - リファレンス: reference.md
